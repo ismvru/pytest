@@ -1,0 +1,6 @@
+__pycache__
+.pytest_cache
+.venv
+test-results
+bandit_report.json
+

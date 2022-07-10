@@ -1,0 +1,36 @@
+#!/bin/bash
+set -ex
+function tests {
+    if [[ -n "${REQ_FILE}" ]]; then
+        pip install -r "${REQ_FILE}"
+    fi
+    PYTEST_ARGS="${PYTEST_ARGS:--v -o junit_family=xunit1}"
+    ADD_PYTEST_ARGS="${ADD_PYTEST_ARGS:-}"
+    PYTEST_COV_REPORT="${PYTEST_COV_REPORT:---junitxml=test-results/coverage.xml}"
+    pytest ${PYTEST_ARGS} ${ADD_PYTEST_ARGS} ${PYTEST_COV_REPORT} .
+}
+
+function lint {
+
+    if [[ -z "${SKIP_FLAKE}" ]]; then
+        FLAKE_EXCLUDE="${FLAKE_EXCLUDE:-.venv}"
+        FLAKE_ARGS="${FLAKE_ARGS:---isolated --count --extend-exclude ${FLAKE_EXCLUDE}}"
+        ADD_FLAKE_ARGS="${ADD_FLAKE_ARGS:-}"
+        flake8 ${FLAKE_ARGS} ${ADD_FLAKE_ARGS} .
+    fi
+    if [[ -z "${SKIP_BANDIT}" ]]; then
+        BANDIT_EXCLUDE="${BANDIT_EXCLUDE:-./.venv}"
+        BANDIT_ARGS="${BANDIT_ARGS:---verbose --ignore-nosec --recursive -f json --exclude ${BANDIT_EXCLUDE}}"
+        ADD_BANDIT_ARGS="${ADD_BANDIT_ARGS:-}"
+        BANDIT_REPORT="${BANDIT_REPORT:-bandit_report.json}"
+        bandit ${BANDIT_ARGS} ${ADD_BANDIT_ARGS} . | tee "${BANDIT_REPORT}"
+    fi
+}
+
+if [[ -z "${SKIP_LINT}" ]]; then
+    lint
+fi
+
+if [[ -z "${SKIP_TESTS}" ]]; then
+    tests
+fi
