@@ -4,7 +4,7 @@ function tests {
     if [[ -n "${REQ_FILE}" ]]; then
         pip install -r "${REQ_FILE}"
     fi
-    PYTEST_ARGS="${PYTEST_ARGS:--v -o junit_family=xunit1}"
+    PYTEST_ARGS="${PYTEST_ARGS:---cov -v -o junit_family=xunit1}"
     ADD_PYTEST_ARGS="${ADD_PYTEST_ARGS:-}"
     PYTEST_COV_REPORT="${PYTEST_COV_REPORT:---junitxml=test-results/coverage.xml}"
     pytest ${PYTEST_ARGS} ${ADD_PYTEST_ARGS} ${PYTEST_COV_REPORT} .

@@ -37,6 +37,6 @@ docker run -it --rm -v $PWD:/code ismv/pytest:latest
 | `SKIP_LINT`         | If set, linters won't run                               | `SKIP_LINT="SomeValue"`                       | Not set                                                                    |
 | `SKIP_TESTS`        | If set, tests won't run                                 | `SKIP_TESTS="SomeValue"`                      | Not set                                                                    |
 | `REQ_FILE`          | Will install python reqs from this file                 | `REQ_FILE="req.txt"`                          | Not set                                                                    |
-| `PYTEST_ARGS`       | Default Pytest args                                     | `PYTEST_ARGS="-q"`                            | `-v -o junit_family=xunit1`                                                |
+| `PYTEST_ARGS`       | Default Pytest args                                     | `PYTEST_ARGS="-q"`                            | `--cov -v -o junit_family=xunit1`                                                |
 | `ADD_PYTEST_ARGS`   | Additional Pytest args that you may pass to applicatoin | `ADD_PYTEST_ARGS="-q"`                        | Not set                                                                    |
 | `PYTEST_COV_REPORT` | Path (and key) to Pytest coverage report                | `PYTEST_COV_REPORT="--junitxml=coverage.xml"` | `--junitxml=test-results/coverage.xml`                                     |
