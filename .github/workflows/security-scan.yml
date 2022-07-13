@@ -43,11 +43,10 @@ jobs:
         with:
           context: .
           load: true
-          tags: ismv/pytest:test
+          tags: testimage
           labels: ${{ steps.meta.outputs.labels }}
 
       - uses: azure/container-scan@v0
         with:
-          image-name: ismv/pytest:test
-          severity-threshold: MEDIUM
-          
+          image-name: testimage
+          severity-threshold: CRITICAL
