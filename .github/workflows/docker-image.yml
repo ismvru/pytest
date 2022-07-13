@@ -5,7 +5,7 @@ on:
     tags:
       - "**"
   pull_request:
-
+    types: [opened]
 jobs:
   build-docker:
     runs-on: ubuntu-latest
