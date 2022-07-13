@@ -43,12 +43,12 @@ jobs:
         with:
           context: .
           load: true
-          tags: testimage
+          tags: ismv/pytest:latest
           labels: ${{ steps.meta.outputs.labels }}
 
       - uses: azure/container-scan@v0
         with:
-          image-name: testimage
+          image-name: ismv/pytest:latest
           severity-threshold: CRITICAL
 
       - name: send telegram message
