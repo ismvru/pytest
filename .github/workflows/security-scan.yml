@@ -1,14 +1,35 @@
-name: Docker Image CI
+name: Security scan
 
 on:
-  push:
-    tags:
-      - "**"
+  workflow_dispatch:
 
 jobs:
+  depcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Depcheck
+        uses: dependency-check/Dependency-Check_Action@main
+        id: Depcheck
+        with:
+          project: "test"
+          path: "."
+          format: "HTML"
+          args: >
+            --failOnCVSS 5
+            --enableRetired
+
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
+        with:
+          name: Depcheck report
+          path: ${{github.workspace}}/reports
+          retention-days: 5
+
   build-docker:
     runs-on: ubuntu-latest
-    environment: DockerHub
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -23,12 +44,6 @@ jobs:
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2.0.0
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
@@ -36,10 +51,14 @@ jobs:
           images: ismv/pytest
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v3
         with:
           context: .
-          push: true
+          load: true
+          tags: test
           platforms: linux/amd64,linux/386,linux/arm64,linux/ppc64le,linux/s390x,linux/arm/v7,linux/arm/v6
-          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - uses: azure/container-scan@v0
+        with:
+          image-name: ismv/pytest:test
