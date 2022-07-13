@@ -2,9 +2,6 @@
 
 [![Docker Image CI](https://github.com/ismvru/pytest/actions/workflows/docker-image.yml/badge.svg)](https://github.com/ismvru/pytest/actions/workflows/docker-image.yml)
 ![Docker Pulls](https://img.shields.io/docker/pulls/ismv/pytest)
-![Docker Image Version (latest by date) amd64](https://img.shields.io/docker/v/ismv/pytest?arch=amd64&label=image%20version%20amd64)
-![Docker Image Version (latest by date) arm64](https://img.shields.io/docker/v/ismv/pytest?arch=arm64&label=image%20version%20arm64)
-![Docker Image Version (latest by date) ppc64le](https://img.shields.io/docker/v/ismv/pytest?arch=ppc64le&label=image%20version%20ppc64le)
 
 - [pytest-docker](#pytest-docker)
   - [Usage](#usage)
