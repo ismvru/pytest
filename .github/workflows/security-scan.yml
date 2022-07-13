@@ -52,7 +52,9 @@ jobs:
           severity-threshold: CRITICAL
 
       - name: send telegram message
+        if: always()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          document: ${{github.workspace}}/reports/dependency-check-report.html
