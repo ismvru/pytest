@@ -1,4 +1,4 @@
-attrs==21.4.0
+attrs==22.1.0
 bandit==1.7.4
 coverage==6.4.2
 flake8==4.0.1
