@@ -1,6 +1,6 @@
 attrs==22.1.0
 bandit==1.7.4
-coverage==6.4.3
+coverage==6.4.4
 flake8==5.0.4
 gitdb==4.0.9
 GitPython==3.1.27
